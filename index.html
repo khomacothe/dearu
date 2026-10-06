@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Tặng Cậu 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #1a0b2e 0%, #2b1055 50%, #0f0c29 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 25px 0;
+        }
+
+        /* MÀN HÌNH MỞ QUÀ */
+        .welcome-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            background: rgba(15, 12, 41, 0.96);
+            cursor: pointer;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .gift-box-main {
+            font-size: 5.5rem;
+            animation: bounce 1.3s infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 112, 150, 0.8));
+            user-select: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        .open-hint {
+            color: #ffb3c6;
+            margin-top: 20px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* KHUNG THIỆP CHÍNH CAO CẤP */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.15);
+            max-width: 520px;
+            width: 92%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2.7rem;
+            text-shadow: 0 0 20px rgba(255, 112, 150, 0.8);
+        }
+
+        /* CHỮ GÕ TỰ NHIÊN */
+        .wishes {
+            color: #f8f9fa;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 28px;
+            min-height: 200px;
+            white-space: pre-line;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background-color: #ff7096;
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+        /* KHUNG INTERACTIVE */
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px 18px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            color: #ffb3c6;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 1. BỘ 3 HỘP QUÀ */
+        .gift-grid {
+            display: flex;
+            justify-content: space-around;
+            gap: 12px;
+        }
+
+        .gift-box-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 18px;
+            padding: 15px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .gift-box-btn span {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .gift-box-btn:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 112, 150, 0.25);
+            border-color: #ff7096;
+            box-shadow: 0 10px 20px rgba(255, 112, 150, 0.3);
+        }
+
+        /* 2. THẺ LỜI HỨA SUỐT ĐỜI */
+        .promise-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .promise-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 12px 18px;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .promise-card:hover {
+            background: linear-gradient(135deg, rgba(255, 112, 150, 0.3), rgba(255, 255, 255, 0.1));
+            border-color: #ff7096;
+            transform: translateX(6px);
+        }
+
+        /* 3. GAME ĐẬP HŨ NGÔI SAO TÌM LỜI CHÚC */
+        .star-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .star-item {
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.08);
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .star-item:hover {
+            transform: scale(1.25) rotate(15deg);
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        /* POPUP BÍ MẬT & LỜI CHÚC */
+        .secret-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(25, 15, 45, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid #ff7096;
+            border-radius: 24px;
+            padding: 28px 22px;
+            width: 88%;
+            max-width: 400px;
+            z-index: 1000;
+            color: #fff;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 40px rgba(255, 112, 150, 0.4);
+        }
+
+        .secret-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .secret-modal h3 {
+            color: #ff7096;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .secret-modal p {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            color: #f1f1f1;
+        }
+
+        .close-modal-btn {
+            background: linear-gradient(135deg, #ff477e, #ff7096);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* HIỆU ỨNG RƠI LẤP LÁNH */
+        .falling-element {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.2rem;
+            animation: fadeOut 0.8s linear forwards;
+            z-index: 99;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.3) translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MÀN HÌNH CHỜ MỞ QUÀ -->
+    <div class="welcome-screen" id="welcomeScreen" onclick="openGift()">
+        <div class="gift-box-main">🎁</div>
+        <div class="open-hint">Chạm vào đây để mở quà nhé! ✨</div>
+    </div>
+
+    <!-- THIỆP CHÍNH -->
+    <div class="card" id="mainCard">
+        <h1>Happy Women's Day ✨</h1>
+
+        <!-- VĂN BẢN GÕ CHỮ TỰ NHIÊN -->
+        <div class="wishes"><span id="typedText"></span><span class="cursor" id="typingCursor"></span></div>
+
+        <!-- 1. BỘ 3 HỘP QUÀ MAY MẮN -->
+        <div class="interactive-section">
+            <div class="section-title">🎁 Mở 1 trong 3 hộp quà bí mật</div>
+            <div class="gift-grid">
+                <div class="gift-box-btn" onclick="openGiftBox(1)">
+                    🎁 <span>Quà #1</span>
+                </div>
+                <div class="gift-box-btn" onclick="openGiftBox(2)">
+                    🎀 <span>Quà #2</span>
+                </div>
+                <div class="gift-box-btn" onclick="openGiftBox(3)">
+                    👑 <span>Quà #3</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CÁC THẺ CAM KẾT / SUỐT ĐỜI -->
+        <div class="interactive-section">
+            <div class="section-title">💖 Những điều tớ luôn dành riêng cho cậu</div>
+            <div class="promise-cards">
+                <div class="promise-card" onclick="openPromise(1)">
+                    <span>✨ Cậu sẽ luôn luôn...</span>
+                    <span>➔</span>
+                </div>
+                <div class="promise-card" onclick="openPromise(2)">
+                    <span>🌸 Bất kể khi nào cậu cần...</span>
+                    <span>➔</span>
+                </div>
+                <div class="promise-card" onclick="openPromise(3)">
+                    <span>⭐ Dù thời gian có trôi đi...</span>
+                    <span>➔</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. GAME ĐẬP HŨ NGÔI SAO TÌM LỜI CHÚC -->
+        <div class="interactive-section">
+            <div class="section-title">✨ Chạm vào ngôi sao để thu thập điều ước</div>
+            <div class="star-container">
+                <div class="star-item" onclick="openStar(1)">⭐</div>
+                <div class="star-item" onclick="openStar(2)">🌟</div>
+                <div class="star-item" onclick="openStar(3)">✨</div>
+            </div>
+        </div>
+
+        <audio id="bg-music" loop preload="auto">
+            <source src="cho-chut.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- POPUP BÍ MẬT -->
+    <div class="secret-modal" id="secretModal">
+        <h3 id="modalTitle">Thông Điệp Bí Mật</h3>
+        <p id="modalText">Nội dung...</p>
+        <button class="close-modal-btn" onclick="closeSecret()">Cảm ơn nhé! 💕</button>
+    </div>
+
+    <script>
+        // Hiệu ứng chuột ma thuật
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.25) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = ['✨', '🌸', '💖'][Math.floor(Math.random() * 3)];
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 800);
+            }
+        });
+
+        // Hiệu ứng hạt rơi nhẹ nhàng
+        setInterval(() => {
+            const el = document.createElement('div');
+            const icons = ['🌸', '✨', '💖', '🌷', '⭐', '🤍'];
+            el.className = 'falling-element';
+            el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 10 + 16) + 'px';
+            const duration = Math.random() * 3 + 4;
+            el.style.animationDuration = duration + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000);
+        }, 300);
+
+        // ĐOẠN CHÚC TỰ NHIÊN (Tốc độ 60ms)
+        const fullWishText = `Chúc cậu một ngày 20/10 thật hạnh phúc và tràn ngập niềm vui nhé! Tớ luôn cảm thấy vô cùng may mắn vì được quen biết cậu — một cô gái tuyệt vời luôn mang lại năng lượng tích cực và sự ấm áp cho mọi người xung quanh.\n\nMong rằng chặng đường sắp tới của cậu sẽ luôn tràn ngập những điều tốt đẹp, làm việc gì cũng suôn sẻ và luôn giữ được nụ cười tự tin, rạng rỡ như hiện tại.\n\nNhân ngày đặc biệt này, cậu cho tớ gửi lời chúc mừng 20/10 đến bác gái nữa nha, chúc mẹ của cậu luôn mạnh khỏe và bình an. Tớ luôn ở đây để sẵn sàng chia sẻ mọi niềm vui cùng cậu!`;
+
+        let charIndex = 0;
+        function typeWriterEffect() {
+            const typedTextEl = document.getElementById('typedText');
+            if (charIndex < fullWishText.length) {
+                typedTextEl.innerHTML += fullWishText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriterEffect, 60);
+            } else {
+                document.getElementById('typingCursor').style.display = "none";
+            }
+        }
+
+        // HÀM MỞ QUÀ
+        function openGift() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const mainCard = document.getElementById('mainCard');
+            const audio = document.getElementById('bg-music');
+
+            if (audio) {
+                audio.play().catch(e => console.log(e));
+            }
+
+            welcomeScreen.style.opacity = '0';
+            welcomeScreen.style.visibility = 'hidden';
+            mainCard.classList.add('active');
+
+            setTimeout(typeWriterEffect, 300);
+        }
+
+        // 1. DỮ LIỆU HỘP QUÀ
+        const giftRewards = {
+            1: "🍦 1 Ly Trà Sữa / Cà Phê free từ tớ (nhớ nhắn đòi tớ bất cứ lúc nào nhé!)",
+            2: "💌 1 Tấm vé 'Luôn được tớ lắng nghe mọi tâm sự 24/7 mà không bao giờ phán xét'",
+            3: "🎁 1 Lời hứa: Bất cứ khi nào cậu cần giúp đỡ, tớ luôn sẵn sàng hỗ trợ hết mình!"
+        };
+
+        function openGiftBox(id) {
+            showModal("🎁 Món Quà Dành Cho Cậu", giftRewards[id]);
+        }
+
+        // 2. DỮ LIỆU LỜI CAM KẾT / SUỐT ĐỜI
+        const promises = {
+            1: "💖 ...là ưu tiên hàng đầu khi cần một người bạn sẵn sàng lắng nghe, thấu hiểu và ở bên cạnh ủng hộ cậu!",
+            2: "🌸 ...dù là lúc vui hay lúc mệt mỏi, tớ vẫn luôn sẵn sàng có mặt để tiếp thêm năng lượng cho cậu.",
+            3: "⭐ ...thì tớ vẫn luôn trân trọng tình bạn này và chúc cậu luôn là cô gái hạnh phúc nhất!"
+        };
+
+        function openPromise(id) {
+            showModal("💌 Lời Hứa Chân Thành", promises[id]);
+        }
+
+        // 3. DỮ LIỆU ĐẬP NGÔI SAO
+        const starWishes = {
+            1: "✨ Mong mỗi sáng thức dậy của cậu đều tràn ngập ánh nắng và niềm vui mới!",
+            2: "🌟 Mong công việc, học tập và mọi dự định của cậu đều diễn ra cực kỳ suôn sẻ!",
+            3: "💖 Mong cậu luôn giữ vững sự tự tin, vì cậu luôn xinh đẹp và tuyệt vời nhất theo cách riêng!"
+        };
+
+        function openStar(id) {
+            showModal("✨ Ngôi Sao Điều Ước", starWishes[id]);
+        }
+
+        // HÀM BẬT POPUP
+        function showModal(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('secretModal').classList.add('show');
+        }
+
+        function closeSecret() {
+            document.getElementById('secretModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
